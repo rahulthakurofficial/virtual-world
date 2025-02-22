@@ -3,7 +3,7 @@ name: Deploy React App
 on:
   push:
     branches:
-      - main  # Change if you're using a different branch
+      - main  # Change this if you're using a different default branch
 
 jobs:
   build-and-deploy:
@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Use the version you're working with
 
       - name: Install dependencies
         run: npm install
@@ -22,5 +27,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # The branch to deploy
-          folder: dist       # This must be `dist`, not `build`
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages  # Deploys to gh-pages branch
+          folder: dist       # Make sure `dist` is the correct folder
