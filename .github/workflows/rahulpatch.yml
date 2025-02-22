@@ -1,0 +1,26 @@
+name: Deploy React App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - rahulpatch  # Change this if your branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Branch where GitHub Pages will be hosted
+          folder: dist  # Change this to "build" if your project creates a build folder
