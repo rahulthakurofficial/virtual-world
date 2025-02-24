@@ -13,17 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensures full history is fetched
+          fetch-depth: 0  # Fetch full history for GitHub Pages
 
-      - name: Setup Git Config
+      - name: Setup Git Authentication
         run: |
           git config --global user.email "rahulthakur.official6@gmail.com"
           git config --global user.name "rahulthakurofficial"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/rahulthakurofficial/virtual-world.git
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'npm'
 
       - name: Install Dependencies
@@ -37,4 +38,4 @@ jobs:
         with:
           branch: gh-pages  # Deployment branch
           folder: dist  # Vite's output build folder
-          token: ${{ secrets.GH_TOKEN }}  # Ensure authentication
+          clean: true  # Remove old files before deployment
